@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block title %}Create Blog{% endblock %}
+{% block blogy %}<li class="active"><a href="Cblog">Make a Blog</a></li> {% endblock %}
+{% block uname %}{{ user.last_name}}, {{ user.first_name }}{% endblock %}
+{% block body %}
+
+
+    <form action = 'Cblog' method = 'POST'>
+            {% csrf_token %}
+            {{ BlogForm.as_p }}
+
+        <input type = "submit" name = "submit" value = "Submit">
+
+    </form>
+
+{% endblock %}

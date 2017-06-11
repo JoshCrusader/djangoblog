@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %} {{ post.title }}{% endblock %}
+{% block uname %}{{ user.last_name}}, {{ user.first_name }}{% endblock %}
+{% block body %}
+
+        <h3>{{ post.title }}</h3>
+        <h5><span class="glyphicon glyphicon-time"></span> Post by <mark>{{ post.author.first_name }} {{ post.author.last_name }}</mark>, {{ post.cdate }}| last edited : {{ post.edate }}</h5>
+        <hr>
+        {% if post.author == user %}
+            <a class="btn btn-danger btn-sm pull-right" href = "Delete/"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+            <a class="btn btn-primary btn-sm pull-right" href = 'Update/'> <span class="glyphicon glyphicon-pencil"></span> Edit</a>
+        {% endif %}
+        <div style = "margin-left:10px">
+            <br>
+            {{ post.content|linebreaks }}
+        </div>
+        <hr>
+    <div style = "margin-left:10px">
+          <h4>Leave a Comment:</h4>
+          <form role="form" action = '/blog/{{ post.id }}/' method = 'POST'>
+              {% csrf_token %}
+            <div class="form-group">
+              <textarea class="form-control" rows="3" name = "commenty" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </form>
+    </div>
+    <hr>
+    <p><span class="badge">{{ comments|length }}</span> Comments:</p><br>
+     <div class="row">
+    {% for comment in comments reversed %}
+
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading">{{ comment.author.first_name}} {{ comment.author.last_name }} <small>{{ comment.cdate }}</small></div>
+                  <div class="panel-body">{{ comment.content|linebreaks }}</div>
+                </div>
+            </div>
+    {% endfor %}
+     </div>
+{% endblock %}

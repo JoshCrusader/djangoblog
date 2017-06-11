@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block homey %}<li class="active"><a href="/blog/home/">Home</a></li> {% endblock %}
+{% block uname %}{{ user.last_name}}, {{ user.first_name }}{% endblock %}
+{% block body %}
+    <form action = "/blog/home" method = "POST">
+    {% csrf_token %}
+    <div>
+    Sort by:
+      <input type="radio" name="author" value="author"> Author
+      <input type="radio" name="date" value="date"> Date
+        <input type="radio" name="le" value="le"> Last Edited
+        <button type="submit" class="btn btn-default" display:inline-block>Sort</button>
+    </div>
+    <br>
+    </form>
+    {% if posts %}
+        {%  for post in posts %}
+
+         <a href = "/blog/{{ post.id }}/">
+            <div class = "col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right">{{ post.author.first_name }} {{ post.author.last_name }}</span></div>
+                      <div class="panel-body">{{ post.content|slice:":100" }}</div>
+                    </div>
+            </div>
+        </a>
+        {% endfor %}
+
+    {% else %}
+        <header> There are no posts yet on this site, Be the first to try it now!</header>
+    {% endif %}
+{% endblock %}
