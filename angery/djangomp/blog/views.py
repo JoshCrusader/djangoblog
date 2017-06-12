@@ -6,7 +6,7 @@ from django.template import loader
 from .models import Author,Post, Comments
 from itertools import chain
 # Create your views here.
-
+from django.db.models.functions import Lower
 mypost = None
 posts = None
 def index(request):
@@ -73,14 +73,11 @@ def Home(request):
         # posts =list(seta)+list(setb)+list(setc)
         posts = postsa | postsb | postsc
         postsort = []
-        autho = False #this variable is a sign that i got pikon then got tamad
-
         try:
             if (request.POST['author'] == 'author'):
                 ##posts = posts.order_by('author__first_name','author__last_name')
-                postsort.append('author__first_name')
-                postsort.append('author__last_name')
-                reversed = False
+                postsort.append('-author__first_name')
+                postsort.append('-author__last_name')
                 autho = True
 
         except:
@@ -89,17 +86,20 @@ def Home(request):
             if (request.POST['le'] == 'le'):
                 ##posts = posts.order_by('edate')
                 postsort.append('edate')
-                if autho == False:
-                    reversed = True
-                else:
-                    reversed = False
         except:
             None
         try:
             if (request.POST['date'] == 'date'):
                 ##posts = posts.order_by('cdate')
-                postsort.append('cdate')
-                reversed = False
+                postsort.append('-cdate')
+
+        except:
+            None
+        try:
+            if (request.POST['title'] == 'title'):
+                ##posts = posts.order_by('cdate')
+                postsort.append('-title')
+                print('beng')
 
         except:
             None
