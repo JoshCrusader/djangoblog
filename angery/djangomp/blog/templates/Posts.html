@@ -26,7 +26,7 @@
                             <div class="panel panel-primary">
                         {% endif %}
 
-                        <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right">{{ post.author.first_name }} {{ post.author.last_name }}, <small>{{ post.cdate }}/{{ post.edate }}</small></span></div>
+                        <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right"><kbd>{{ post.author.first_name }} {{ post.author.last_name }}</kbd> <small>{{ post.cdate }}/{{ post.edate }}</small></span></div>
                         <div class="panel-body">{{ post.content|linebreaks|slice:":300" }}</div>
                          </div>
                 </div>
@@ -43,7 +43,7 @@
                             <div class="panel panel-primary">
                         {% endif %}
 
-                        <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right">{{ post.author.first_name }} {{ post.author.last_name }}, <small>{{ post.cdate }}</small></span></div>
+                    <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right"><kbd>{{ post.author.first_name }} {{ post.author.last_name }}</kbd> <small>{{ post.cdate }}/{{ post.edate }}</small></span></div>
                         <div class="panel-body">{{ post.content|linebreaks|slice:":300" }}</div>
                          </div>
                 </div>
