@@ -7,7 +7,6 @@ from .models import Author,Post, Comments
 from itertools import chain
 # Create your views here.
 
-user = None
 mypost = None
 posts = None
 def index(request):
@@ -22,7 +21,7 @@ def index(request):
                 author = None
             if(author is not None):
                 user = author
-
+                request.session['username'] = author.username
                 return redirect('home')
             else:
                 return render(request, 'index.html', {'AuthorForm': form, 'check': True})
@@ -41,7 +40,7 @@ def specific(request, Post_id):
             print(request.POST['commenty'])
         except:
             None
-    return render(request, 'key_blog.html', {'post':post,'comments':Comments.objects.filter(Ppost = post),'user':user})
+    return render(request, 'key_blog.html', {'post':post,'comments':Comments.objects.filter(Ppost = post),'user': Author.objects.get(username=request.session['username'])})
 
 
 def Home(request):
@@ -50,6 +49,7 @@ def Home(request):
     postsa = None
     postsb = None
     postsc = None
+    print(request.session['username'])
     if(request.method == "POST"):
 
         try:
@@ -73,7 +73,7 @@ def Home(request):
 
         try:
             if (request.POST['author'] == 'author'):
-                posts = posts.order_by('author__first_name').order_by('author__last_name')
+                posts = posts.order_by('author__first_name')
 
         except:
             None
@@ -94,7 +94,7 @@ def Home(request):
         posts = Post.objects.all()
     context = {
         'posts': posts,
-        'user':user,
+        'user': Author.objects.get(username=request.session['username']),
     }
     return render(request, 'Posts.html', context)
 
@@ -120,23 +120,23 @@ def Update(request, Post_id):
             return redirect('home')
 
 
-        return render(request, 'UBlog.html', {'user': user, 'post':post})
+        return render(request, 'UBlog.html', {'user':  Author.objects.get(username=request.session['username']), 'post':post})
     else:
         print('not yours')
     return redirect('home')
 def register(request):
-    global user
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             author = Author(username=form.cleaned_data['username'],password=form.cleaned_data.get('password'),first_name = form.cleaned_data['first_name'], last_name = form.cleaned_data['last_name'])
+
             try:
                 if (Author.objects.get(username = author.username)):
                     return render(request, 'Register.html',{'RegisterForm':form,'check':True})
             except:
                 None
             author.save()
-            user = author
+            request.session['username'] = author.username
             return redirect('home')
     else:
         form = RegisterForm()
@@ -146,7 +146,6 @@ def Logout(request):
     return redirect('index')
 
 def Cblog(request):
-    global user
     if request.method == "POST":
         form = BlogForm(request.POST)
         if form.is_valid():
@@ -157,4 +156,4 @@ def Cblog(request):
     else:
         form = BlogForm()
 
-    return render(request, 'CBlog.html' ,{'BlogForm' : form,'user':user})
+    return render(request, 'CBlog.html' ,{'BlogForm' : form,'user': Author.objects.get(username=request.session['username'])})
