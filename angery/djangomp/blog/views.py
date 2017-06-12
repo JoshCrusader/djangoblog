@@ -72,27 +72,39 @@ def Home(request):
 
         # posts =list(seta)+list(setb)+list(setc)
         posts = postsa | postsb | postsc
+        postsort = []
+        autho = False #this variable is a sign that i got pikon then got tamad
+
         try:
             if (request.POST['author'] == 'author'):
-                posts = posts.order_by('author__first_name','author__last_name')
+                ##posts = posts.order_by('author__first_name','author__last_name')
+                postsort.append('author__first_name')
+                postsort.append('author__last_name')
                 reversed = False
-
-        except:
-            None
-        try:
-            if (request.POST['date'] == 'date'):
-                posts = posts.order_by('cdate').order_by('cdate')
-                reversed = False
+                autho = True
 
         except:
             None
         try:
             if (request.POST['le'] == 'le'):
-                posts = posts.order_by('edate').order_by('edate')
-                reversed = True
+                ##posts = posts.order_by('edate')
+                postsort.append('edate')
+                if autho == False:
+                    reversed = True
+                else:
+                    reversed = False
         except:
             None
+        try:
+            if (request.POST['date'] == 'date'):
+                ##posts = posts.order_by('cdate')
+                postsort.append('cdate')
+                reversed = False
 
+        except:
+            None
+        print(reversed)
+        posts = posts.order_by(*postsort)
     else:
         request.session['search'] = ''
         posts = Post.objects.all()
