@@ -15,17 +15,41 @@
     <br>
     </form>
     {% if posts %}
-        {%  for post in posts %}
+        {% if reveresed == True%}
+            {%  for post in posts reversed %}
 
-         <a href = "/blog/{{ post.id }}/">
-            <div class = "col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right">{{ post.author.first_name }} {{ post.author.last_name }}</span></div>
-                      <div class="panel-body">{{ post.content|slice:":100" }}</div>
-                    </div>
-            </div>
-        </a>
-        {% endfor %}
+             <a href = "/blog/{{ post.id }}/">
+                <div class = "col-md-12">
+                        {% if user.username == post.author.username %}
+                            <div class="panel panel-success">
+                        {% else %}
+                            <div class="panel panel-primary">
+                        {% endif %}
+
+                        <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right">{{ post.author.first_name }} {{ post.author.last_name }}, <small>{{ post.cdate }}/{{ post.edate }}</small></span></div>
+                        <div class="panel-body">{{ post.content|linebreaks|slice:":300" }}</div>
+                         </div>
+                </div>
+            </a>
+            {% endfor %}
+        {% else %}
+            {%  for post in posts %}
+
+             <a href = "/blog/{{ post.id }}/">
+                <div class = "col-md-12">
+                        {% if user.username == post.author.username %}
+                            <div class="panel panel-success">
+                        {% else %}
+                            <div class="panel panel-primary">
+                        {% endif %}
+
+                        <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right">{{ post.author.first_name }} {{ post.author.last_name }}, <small>{{ post.cdate }}</small></span></div>
+                        <div class="panel-body">{{ post.content|linebreaks|slice:":300" }}</div>
+                         </div>
+                </div>
+            </a>
+            {% endfor %}
+        {% endif %}
 
     {% else %}
         <header> There are no posts yet on this site, Be the first to try it now!</header>

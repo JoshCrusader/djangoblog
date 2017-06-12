@@ -22,6 +22,7 @@ def index(request):
             if(author is not None):
                 user = author
                 request.session['username'] = author.username
+                request.session['seach'] = ''
                 return redirect('home')
             else:
                 return render(request, 'index.html', {'AuthorForm': form, 'check': True})
@@ -44,57 +45,61 @@ def specific(request, Post_id):
 
 
 def Home(request):
-    global posts
-
+    posts = None
     postsa = None
     postsb = None
     postsc = None
+    reversed = True
     print(request.session['username'])
     if(request.method == "POST"):
-
+        posts = request.session['search']
         try:
-            request.POST['filter']
-            posts = Post.objects.all()
-            postsa = posts.filter(title__icontains=request.POST['filter'])
-            postsb = posts.filter(author__first_name__icontains=request.POST['filter'])
-            postsc = posts.filter(content__icontains=request.POST['filter'])
+            request.session['search'] = request.POST['filter']
 
-            #seta = set(postsa)
-            #setb = set(postsb)
-            #setc = set(postsc)
-            #setb = setb - seta
-            #setd = set(list(seta)+list(setb))
-            #setc = setc - (setd)
-
-            #posts =list(seta)+list(setb)+list(setc)
-            posts = postsa | postsb | postsc
         except:
             None
+        posts = Post.objects.all()
+        postsa = posts.filter(title__icontains=request.session['search'])
+        postsb = posts.filter(author__first_name__icontains=request.session['search'])
+        postsc = posts.filter(content__icontains=request.session['search'])
 
+        # seta = set(postsa)
+        # setb = set(postsb)
+        # setc = set(postsc)
+        # setb = setb - seta
+        # setd = set(list(seta)+list(setb))
+        # setc = setc - (setd)
+
+        # posts =list(seta)+list(setb)+list(setc)
+        posts = postsa | postsb | postsc
         try:
             if (request.POST['author'] == 'author'):
-                posts = posts.order_by('author__first_name')
+                posts = posts.order_by('author__first_name','author__last_name')
+                reversed = False
 
         except:
             None
         try:
             if (request.POST['date'] == 'date'):
                 posts = posts.order_by('cdate').order_by('cdate')
+                reversed = False
 
         except:
             None
         try:
             if (request.POST['le'] == 'le'):
                 posts = posts.order_by('edate').order_by('edate')
-
+                reversed = True
         except:
             None
 
     else:
+        request.session['search'] = ''
         posts = Post.objects.all()
     context = {
         'posts': posts,
         'user': Author.objects.get(username=request.session['username']),
+        'reveresed': reversed,
     }
     return render(request, 'Posts.html', context)
 
@@ -137,6 +142,7 @@ def register(request):
                 None
             author.save()
             request.session['username'] = author.username
+            request.session['seach'] = ''
             return redirect('home')
     else:
         form = RegisterForm()
