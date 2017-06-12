@@ -36,7 +36,7 @@ def specific(request, Post_id):
     post = Post.objects.get(id = Post_id)
     if request.method == "POST":
         try:
-            comment = Comments(author = user, Ppost = post,cdate = timezone.now(), content = request.POST['commenty'])
+            comment = Comments(author = Author.objects.get(username=request.session['username']), Ppost = post,cdate = timezone.now(), content = request.POST['commenty'])
             comment.save()
             print(request.POST['commenty'])
         except:
@@ -106,14 +106,14 @@ def Home(request):
 def Delete(request, Post_id):
     global user
     post = Post.objects.get(id=Post_id)
-    if (Post is not None and post.author == user):
+    if (Post is not None and post.author == Author.objects.get(username=request.session['username'])):
         post.delete()
 
     return redirect('home')
 def Update(request, Post_id):
     global user
     post = Post.objects.get(id = Post_id)
-    if(Post is not None and post.author == user):
+    if(Post is not None and post.author == Author.objects.get(username=request.session['username'])):
         if request.method == "POST":
 
             post.edate=timezone.now()
@@ -155,7 +155,7 @@ def Cblog(request):
     if request.method == "POST":
         form = BlogForm(request.POST)
         if form.is_valid():
-            post = Post(author=user, cdate=timezone.now(),edate=timezone.now(),title=form.cleaned_data['title'],content = form.cleaned_data['content'])
+            post = Post(author=Author.objects.get(username=request.session['username']), cdate=timezone.now(),edate=timezone.now(),title=form.cleaned_data['title'],content = form.cleaned_data['content'])
             post.save()
             return redirect('home')
 
