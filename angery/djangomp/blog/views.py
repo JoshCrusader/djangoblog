@@ -42,7 +42,7 @@ def specific(request, Post_id):
         except:
             None
     try:
-        myPost = Votes.objects.get(author = Author.objects.get(username=request.session['username']))
+        myPost = Votes.objects.get(author = Author.objects.get(username=request.session['username']),Ppost = post)
         print('yes')
     except:
         myPost = None

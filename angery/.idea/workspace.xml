@@ -32,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/djangomp/blog/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+            <state relative-caret-position="436">
+              <caret line="42" column="16" lean-forward="true" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="16" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -54,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="key_blog.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="key_blog.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/djangomp/blog/templates/key_blog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="65" lean-forward="false" selection-start-line="25" selection-start-column="59" selection-end-line="25" selection-end-column="65" />
+            <state relative-caret-position="518">
+              <caret line="40" column="54" lean-forward="true" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
               <folding>
                 <element signature="e#865#892#0#HTML" expanded="true" />
                 <element signature="e#1061#1087#0#HTML" expanded="true" />
@@ -153,8 +153,8 @@
         <option value="$PROJECT_DIR$/djangomp/blog/models.py" />
         <option value="$PROJECT_DIR$/djangomp/blog/urls.py" />
         <option value="$PROJECT_DIR$/djangomp/blog/templates/Posts.html" />
-        <option value="$PROJECT_DIR$/djangomp/blog/views.py" />
         <option value="$PROJECT_DIR$/djangomp/blog/templates/key_blog.html" />
+        <option value="$PROJECT_DIR$/djangomp/blog/views.py" />
       </list>
     </option>
   </component>
@@ -790,16 +790,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/djangomp/blog/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/djangomp/blog/templates/Posts.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
@@ -810,8 +800,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/djangomp/blog/templates/key_blog.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="65" lean-forward="false" selection-start-line="25" selection-start-column="59" selection-end-line="25" selection-end-column="65" />
+        <state relative-caret-position="518">
+          <caret line="40" column="54" lean-forward="true" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
           <folding>
             <element signature="e#865#892#0#HTML" expanded="true" />
             <element signature="e#1061#1087#0#HTML" expanded="true" />
@@ -819,6 +809,16 @@
             <element signature="e#1827#1853#0#HTML" expanded="true" />
             <element signature="e#2802#2828#0#HTML" expanded="true" />
             <element signature="e#3340#3382#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/djangomp/blog/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="42" column="16" lean-forward="true" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
