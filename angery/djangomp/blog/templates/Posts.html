@@ -10,7 +10,9 @@
       <input type="radio" name="author" value="author"> Author
       <input type="radio" name="date" value="date"> Date Created
         <input type="radio" name="le" value="le"> Last Edited
+        <input type="radio" name="lc" value="lc"> Last Created
         <input type="radio" name="title" value="title"> Title
+
         <button type="submit" class="btn btn-default" display:inline-block>Sort</button>
     </div>
     <br>
@@ -27,8 +29,31 @@
                             <div class="panel panel-primary">
                         {% endif %}
 
-                        <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right"><kbd>{{ post.author.first_name }} {{ post.author.last_name }}</kbd> <small>{{ post.cdate }}/{{ post.edate }}</small></span></div>
-                        <div class="panel-body">{{ post.content|linebreaks|slice:":300" }}</div>
+                        <div class="panel-heading"> {{ post.title|slice:":50" }}
+                            <span style = "float:right">
+
+                                <kbd>{{ post.author.first_name }} {{ post.author.last_name }}</kbd> <small>{{ post.cdate }}/{{ post.edate }}</small>
+                            </span>
+                        </div>
+                        <div class="panel-body">{{ post.content|linebreaks|slice:":300" }}<br><br> <small>
+                            {% for x in comments %}
+                                {% if x.0 == post.id %}
+                                    {{ x.2 }}
+                                {% endif %}
+                            {% endfor %}
+                            likes ·
+                             {% for x in comments %}
+                                {% if x.0 == post.id %}
+                                    {{ x.3 }}
+                                {% endif %}
+                            {% endfor %}
+                            dislikes ·
+                            {% for x in comments %}
+                                {% if x.0 == post.id %}
+                                    {{ x.1|length }}
+                                {% endif %}
+                            {% endfor %}
+                            comments</small></div>
                          </div>
                 </div>
             </a>
@@ -45,7 +70,19 @@
                         {% endif %}
 
                     <div class="panel-heading"> {{ post.title|slice:":50" }} <span style = "float:right"><kbd>{{ post.author.first_name }} {{ post.author.last_name }}</kbd> <small>{{ post.cdate }}/{{ post.edate }}</small></span></div>
-                        <div class="panel-body">{{ post.content|linebreaks|slice:":300" }}</div>
+                        <div class="panel-body">{{ post.content|linebreaks|slice:":300"}} <br><br><small>
+                            {% for x in comments %}
+                                {% if x.0 == post.id %}
+                                    {{ x.2 }}
+                                {% endif %}
+                            {% endfor %}
+                            points ·
+                            {% for x in comments %}
+                                {% if x.0 == post.id %}
+                                    {{ x.1|length }}
+                                {% endif %}
+                            {% endfor %}
+                            comments</small></div>
                          </div>
                 </div>
             </a>

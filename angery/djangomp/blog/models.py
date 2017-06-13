@@ -25,3 +25,11 @@ class Comments(models.Model):
 
     def __str__(self):
         return 'Comment # {}'.format(self.id)
+
+class Votes(models.Model):
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    Ppost = models.ForeignKey(Post, on_delete = models.CASCADE)
+    pointer = models.BooleanField(default=True)
+
+    def __str__(self):
+        return 'Vote is {}'.format(self.pointer)

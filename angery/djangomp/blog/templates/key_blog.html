@@ -15,6 +15,24 @@
             {{ post.content|linebreaks }}
         </div>
         <hr>
+    <div style = "margin-left:10px;">
+        <h6 class = "pull-left">{{ votes }} Likes · {{ panget }} Dislikes</h6>
+        {% if myPost is None %}
+            <a class="btn btn-default btn-sm pull-left" style = "margin-left:15px"href = "tYp0zPar@sAuPd@t3/"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+            <a class="btn btn-default btn-sm pull-left" href = '0m9D3l3t3m3p0z1w@ntt01y@kn@p0z/'> <span class="glyphicon glyphicon-thumbs-down"></span></a><br><br>
+
+        {% else %}
+            {% if myPost.pointer == True %}
+                <a class="btn btn-success btn-sm pull-left active" style = "margin-left:15px"href = "tYp0zPar@sAuPd@t3/"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                <a class="btn btn-default btn-sm pull-left" href = '0m9D3l3t3m3p0z1w@ntt01y@kn@p0z/'> <span class="glyphicon glyphicon-thumbs-down"></span></a><br><br>
+            {% else %}
+                <a class="btn btn-default btn-sm pull-left" style = "margin-left:15px"href = "tYp0zPar@sAuPd@t3/"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                <a class="btn btn-danger btn-sm pull-left active" href = '0m9D3l3t3m3p0z1w@ntt01y@kn@p0z/'> <span class="glyphicon glyphicon-thumbs-down"></span></a><br><br>
+
+            {% endif %}
+        {% endif %}
+        <br><br>
+    </div>
     <div style = "margin-left:10px">
           <h4>Leave a Comment:</h4>
           <form role="form" action = '/blog/{{ post.id }}/' method = 'POST'>

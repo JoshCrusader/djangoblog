@@ -3,7 +3,7 @@ from .forms import AuthorForm,RegisterForm, BlogForm
 from django.http import HttpResponse
 from django.utils import timezone
 from django.template import loader
-from .models import Author,Post, Comments
+from .models import Author,Post, Comments, Votes
 from itertools import chain
 # Create your views here.
 from django.db.models.functions import Lower
@@ -41,7 +41,13 @@ def specific(request, Post_id):
             print(request.POST['commenty'])
         except:
             None
-    return render(request, 'key_blog.html', {'post':post,'comments':Comments.objects.filter(Ppost = post),'user': Author.objects.get(username=request.session['username'])})
+    try:
+        myPost = Votes.objects.get(author = Author.objects.get(username=request.session['username']))
+        print('yes')
+    except:
+        myPost = None
+
+    return render(request, 'key_blog.html', {'post':post,'comments':Comments.objects.filter(Ppost = post),'votes':len(Votes.objects.filter(Ppost=post,pointer=True)),'panget':len(Votes.objects.filter(Ppost=post,pointer=False)),'user': Author.objects.get(username=request.session['username']),'myPost':myPost})
 
 
 def Home(request):
@@ -96,6 +102,13 @@ def Home(request):
         except:
             None
         try:
+            if (request.POST['lc'] == 'lc'):
+                ##posts = posts.order_by('cdate')
+                postsort.append('cdate')
+
+        except:
+            None
+        try:
             if (request.POST['title'] == 'title'):
                 ##posts = posts.order_by('cdate')
                 postsort.append('-title')
@@ -108,10 +121,18 @@ def Home(request):
     else:
         request.session['search'] = ''
         posts = Post.objects.all()
+
+    nigahiga = []
+
+    for i in posts:
+        nigahiga.append([i.id,Comments.objects.filter(Ppost = i),len(Votes.objects.filter(Ppost = i, pointer = True)),len(Votes.objects.filter(Ppost = i, pointer = False))])
+
     context = {
+
         'posts': posts,
         'user': Author.objects.get(username=request.session['username']),
         'reveresed': reversed,
+        'comments': nigahiga,
     }
     return render(request, 'Posts.html', context)
 
@@ -163,6 +184,8 @@ def register(request):
 def Logout(request):
     return redirect('index')
 
+def keyvalue(dict, key):
+    return dict[key]
 def Cblog(request):
     if request.method == "POST":
         form = BlogForm(request.POST)
@@ -175,3 +198,42 @@ def Cblog(request):
         form = BlogForm()
 
     return render(request, 'CBlog.html' ,{'BlogForm' : form,'user': Author.objects.get(username=request.session['username'])})
+
+def up(request,Post_id):
+    leAuthor = Author.objects.get(username=request.session['username'])
+    post = Post.objects.get(id=Post_id)
+    try:
+        vote = Votes.objects.get(author = leAuthor, Ppost = post)
+    except:
+        vote = None
+    if(vote is None):
+        vote = Votes(author = leAuthor, Ppost = post, pointer = True)
+        vote.save()
+    elif(vote.pointer == True):
+        vote.delete()
+    else:
+        vote.pointer = True
+        vote.save()
+
+
+    return redirect('/blog/'+str(post.id))
+
+def delet(request,Post_id):
+    leAuthor = Author.objects.get(username=request.session['username'])
+    post = Post.objects.get(id=Post_id)
+    try:
+        vote = Votes.objects.get(author = leAuthor, Ppost = post)
+    except:
+        vote = None
+    if(vote is None):
+        vote = Votes(author = leAuthor, Ppost = post, pointer = False)
+        vote.save()
+    elif(vote.pointer == False):
+        vote.delete()
+    else:
+        print('xd')
+        vote.pointer = False
+        vote.save()
+
+
+    return redirect('/blog/'+str(post.id))

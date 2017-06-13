@@ -33,4 +33,8 @@ urlpatterns = [
     url(r'^(?P<Post_id>[0-9]+)/Update/', views.Update, name = 'Update'),
 
     url(r'^(?P<Post_id>[0-9]+)/Delete/', views.Delete, name = 'Delete'),
+
+    url(r'^(?P<Post_id>[0-9]+)/tYp0zPar@sAuPd@t3/', views.up, name = 'tYp0zPar@sAuPd@t3'),
+
+    url(r'^(?P<Post_id>[0-9]+)/0m9D3l3t3m3p0z1w@ntt01y@kn@p0z/', views.delet, name = '0m9D3l3t3m3p0z1w@ntt01y@kn@p0z'),
 ]
