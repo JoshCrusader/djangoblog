@@ -67,8 +67,8 @@ def Home(request):
         posts = Post.objects.all()
         postsa = posts.filter(title__icontains=request.session['search'])
         postsb = posts.filter(author__first_name__icontains=request.session['search'])
+        postsd = posts.filter(author__last_name__icontains=request.session['search'])
         postsc = posts.filter(content__icontains=request.session['search'])
-
         # seta = set(postsa)
         # setb = set(postsb)
         # setc = set(postsc)
@@ -77,7 +77,7 @@ def Home(request):
         # setc = setc - (setd)
 
         # posts =list(seta)+list(setb)+list(setc)
-        posts = postsa | postsb | postsc
+        posts = postsa | postsb | postsd | postsc
         postsort = []
         try:
             if (request.POST['author'] == 'author'):
@@ -116,13 +116,21 @@ def Home(request):
 
         except:
             None
-        print(reversed)
+        try:
+            if (request.POST['likes'] == 'likes'):
+                ##posts = posts.order_by('cdate')
+                postsort.append('likes')
+                print('beng')
+
+        except:
+            None
+        Post.objects.extra(select={'likes': 'SELECT COUNT(*) FROM POST WHERE POST.ID = BLOG.PPOST.ID'}, )
         posts = posts.order_by(*postsort)
     else:
         request.session['search'] = ''
         posts = Post.objects.all()
 
-    nigahiga = []
+    nigahiga = [] #voting system
 
     for i in posts:
         nigahiga.append([i.id,Comments.objects.filter(Ppost = i),len(Votes.objects.filter(Ppost = i, pointer = True)),len(Votes.objects.filter(Ppost = i, pointer = False))])
